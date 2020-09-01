@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component,useState,FC } from 'react';
+import Header from './components/Header';
+import CreateContent from './components/CreateContent';
+import TodoList from './components/TodoList';
+import { Todo } from './components/TodoItem'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const todos: Todo[] = [
+  {
+    id : 1,
+    content: "React",
+    done:false
+  },
+  {
+    id : 2,
+    content: "yori muzui",
+    done:false
+  },
+  {
+    id : 3,
+    content: "Typescript",
+    done:true
+  },
+]
+const App : FC = () => {
+    const [contents,setContent] = useState(todos);
+    const addTodo = (text : string) => {
+      console.log(text)
+      const nowContents : Todo = {
+        id:contents.length + 1,
+        content:text,
+        done:false
+      }
+      const hoge : Todo[] = [...contents,nowContents];
+      setContent(hoge);
+    }
+    const title: string = "APP TITLE";
+    return(
+      <>
+      <Header title={title} />
+      <CreateContent func={addTodo}/>
+      <TodoList todos={contents} state="ALL" />
+      </>
+    );
 }
 
 export default App;
